@@ -5,20 +5,23 @@ import requests
 import spacy
 import re
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from nlp import lemmetizador
 
-options = webdriver.ChromeOptions()
+def abrirSelenium():
+    options = webdriver.ChromeOptions()
 
-# options.add_argument('--headless')
+    # Vamos deixar o navegador invisível
+    # options.add_argument('--headless')
 
-driver = webdriver.Chrome(options=options)
-
-driver.get("https://www.bcb.gov.br/publicacoes/atascopom")
-
-print(driver.title)
-
-driver.quit()
+    with webdriver.Chrome(options=options) as driver:
+        scraping(driver)
 
 
-from bs4 import BeautifulSoup
-with requests.get("https://www.bcb.gov.br/publicacoes/atascopom") as req:
-    soup = BeautifulSoup(req.content, 'html.parser')
+def scraping(driver):
+    driver.get("https://www.bcb.gov.br/publicacoes/atascopom")
+    texto = driver.find_element(By.CSS_SELECTOR, "#ataconteudo").text
+    print("...")
+
+if __name__=="__main__":
+    abrirSelenium()
