@@ -7,21 +7,13 @@ import re
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from nlp import lemmetizador
+from driver import criar_driver, selecionar_elemento
+from scraper_bcb import scraping
 
-def abrirSelenium():
-    options = webdriver.ChromeOptions()
-
-    # Vamos deixar o navegador invisível
-    # options.add_argument('--headless')
-
-    with webdriver.Chrome(options=options) as driver:
+def main():
+    with criar_driver() as driver:
         scraping(driver)
-
-
-def scraping(driver):
-    driver.get("https://www.bcb.gov.br/publicacoes/atascopom")
-    texto = driver.find_element(By.CSS_SELECTOR, "#ataconteudo").text
-    print("...")
+    return 0
 
 if __name__=="__main__":
-    abrirSelenium()
+    main()
